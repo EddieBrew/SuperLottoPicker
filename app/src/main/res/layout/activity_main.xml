@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="@drawable/superlotto"
+	tools:context=".MainActivity">
+
+
+
+	<TextView
+		android:id="@+id/title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="20dp"
+		android:text="@string/appTitle"
+		android:textStyle="bold"
+		android:textSize="30sp" />
+
+	<EditText
+		android:id="@+id/editTextMinMax"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="Enter min and max ranges(ex 50,100)"
+		android:singleLine="true" />
+
+	<FrameLayout
+		android:id="@+id/lotteryNumberFrame"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="10dp">
+	</FrameLayout>
+
+	<FrameLayout
+		android:id="@+id/lotteryNumberFrame1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="10dp">
+	</FrameLayout>
+
+	<FrameLayout
+		android:id="@+id/lotteryNumberFrame2"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="10dp">
+	</FrameLayout>
+
+	<FrameLayout
+		android:id="@+id/lotteryNumberFrame3"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="10dp">
+	</FrameLayout>
+
+	<Button
+		android:id="@+id/btnGenerateLotteryTickets"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="10dp"
+		android:textColor="@color/colorPrimaryDark"
+		android:textSize="20sp"
+		android:textStyle="bold"
+		android:text="CLICK TO GENERATE NUMBERS" />
+
+
+
+</LinearLayout>

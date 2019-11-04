@@ -6,24 +6,32 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:background="@drawable/superlotto"
-	tools:context=".MainActivity">
-
+	tools:context=".LotteryNumberGeneratorActivity">
 
 
 	<TextView
-		android:id="@+id/title"
-		android:layout_width="wrap_content"
+		android:id="@+id/generatorTitleNumber"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="20dp"
-		android:text="@string/appTitle"
-		android:textStyle="bold"
-		android:textSize="30sp" />
+		android:text="@string/title_activity_generator"
+		android:background="@color/Aqua"
+		android:textAlignment="center"
+		android:textSize="30sp"
+		android:textStyle="bold" />
 
 	<EditText
 		android:id="@+id/editTextMinMax"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:hint="Enter min and max ranges(ex 50,100)"
+		android:layout_height="40dp"
+		android:layout_marginStart="10dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginEnd="10dp"
+		android:background="@drawable/border"
+		android:hint="Enter min and max ranges(ex 5,10)"
+		android:paddingStart="10dp"
+		android:paddingTop="5dp"
+		android:paddingEnd="10dp"
+		android:paddingBottom="5dp"
 		android:singleLine="true" />
 
 	<FrameLayout

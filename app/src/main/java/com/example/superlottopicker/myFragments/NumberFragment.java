@@ -1,4 +1,4 @@
-package com.example.superlottopicker;
+package com.example.superlottopicker.myFragments;
 
 
 /*
@@ -12,21 +12,21 @@ attributes for displaying the 5 lottery numbers and the mega number
 
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.HashMap;
+import com.example.superlottopicker.R;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
-
-import static android.os.SystemClock.sleep;
 
 
 /**
@@ -145,43 +145,49 @@ public class NumberFragment extends Fragment {
 	 *  be chosen as the number
 	 *
 	 * @pre none
-	 * @parameter List<Integer> myList: list containing the user defined min,max values
+	 * @parameter List<Integer> myLottoList: list containing the user defined min,max values
 	 * @post
 	 **********************************************************************************/
-	void generateLotteryNumbers(List<Integer> myList){
-
+	public void generateLotteryNumbers(List<Integer> myLottoList, List<Integer> myMegaList){
+		//Log.i("MyNumbers4: " ,  myLottoList.size() + "------" + myMegaList.size());
+		Log.i("MyNumbers4: " ,  "Entering method");
 		Random rand = new Random();
 		int[] lotteryNumbers = new int[5];
-		int loopIterator = 50;//the algorithm generates the numbers after the 100 loop
+		int loopIterator = 100;//the algorithm generates the numbers after the 100 loop
 		int minNum = 1; //
-		int maxNum = myList.size() -1;
+		int maxNum = myLottoList.size() -1;
 		//int megaMaxNum = 27;//mega number highest number
 
-		for(int y=0; y < myList.size(); y++){
-			//System.out.println("MyNumbers4: " + y + "------" + myList.get(y));
+		for(int y=0; y < myLottoList.size(); y++){
+			System.out.println("MyNumbers4: " + y + "------" + myLottoList.get(y));
 		}
 
 
-		for(int i =0; i < loopIterator; i++) {
-			int num =5;
-			int index = 0;
-			while (index < num) {
-				int newNum = rand.nextInt((maxNum - minNum) + 1) + minNum;
-                 if(index == 0){
-	                 lotteryNumbers[index] = myList.get(newNum);
-                 }
-                 else {
-					while (isDuplicateNum(myList.get(newNum), lotteryNumbers, index)) {
-						newNum = rand.nextInt((maxNum - minNum) + 1) + minNum;
-					}
-	                 lotteryNumbers[index] = myList.get(newNum);
-				}
-				index++;
-			}// end while
-		}//end for
-		sortAscending(lotteryNumbers);
-		//displayLotteryNumber(lotteryNumbers, number);
-		displayLotteryNumber(lotteryNumbers);
+	   try {
+		    for(int i = 0; i < loopIterator; i++) {
+
+			    int num = 5;
+			    int index = 0;
+			    while (index < num) {
+				    int newNum = rand.nextInt((maxNum - minNum) + 1) + minNum;
+				    if (index == 0) {
+					    lotteryNumbers[index] = myLottoList.get(newNum);
+					    //Log.i("MyNumbers4: ", String.valueOf(lotteryNumbers[index]));
+				    } else {
+					    while (isDuplicateNum(myLottoList.get(newNum), lotteryNumbers, index)) {
+						    newNum = rand.nextInt((maxNum - minNum) + 1) + minNum;
+					    }
+					    lotteryNumbers[index] = myLottoList.get(newNum);
+					    //Log.i("MyNumbers4: ", String.valueOf(lotteryNumbers[index]));
+				    }
+				    index++;
+			    }// end while
+		    }
+		    sortAscending(lotteryNumbers);
+		    displayLotteryNumberOnUI(lotteryNumbers, myMegaList);
+	   }catch(Exception e){
+	        // Log.i( "ERROR10000", e.toString());
+	   }
 	}
 
 
@@ -192,7 +198,7 @@ public class NumberFragment extends Fragment {
 	 * @parameter int array
 	 * @post  updates the array
 	 **********************************************************************************/
-	void sortAscending(int[] array){
+	public void sortAscending(int[] array){
 		boolean swap = true;
 		int j = 0;
 		while (swap) {
@@ -212,14 +218,14 @@ public class NumberFragment extends Fragment {
 
 
 	/*********************************************************************************
-	 *  displayLotteryNumber() displays the lottery number in the UI numberFragment
+	 *  displayLotteryNumberOnUI() displays the lottery number in the UI numberFragment
 	 *
 	 * @pre none
 	 * @parameter  int[] numbers: array containing the generated lottery numbers
 	 *             int
 	 * @post
 	 **********************************************************************************/
-	void displayLotteryNumber(int[] numbers){
+	public void displayLotteryNumberOnUI(@NotNull int[] numbers, List<Integer> myMegaList){
 
 
 		for (int index = 0; index < numbers.length; index ++){
@@ -239,8 +245,9 @@ public class NumberFragment extends Fragment {
 			}
 		}
 
-		numMega.setText(String.valueOf(generateMegaNumber()));
+		numMega.setText(String.valueOf(generateMegaNumber(myMegaList)));
 
+		Toast.makeText(getActivity(), "Lottery Numbers for Tickets completed", Toast.LENGTH_SHORT).show();
 	}
 
 	/*********************************************************************************
@@ -252,7 +259,7 @@ public class NumberFragment extends Fragment {
 	 *            int index current number of generated numbers in the array
 	 * @post return true if number exist in the arry, false if the number does not exist in the array
 	 **********************************************************************************/
-	boolean isDuplicateNum(int newNum, int[]lotteryNumbers, int index){
+	public boolean isDuplicateNum(int newNum, int[]lotteryNumbers, int index){
 
 		boolean duplicate = false;
 		for (int i = 0; i < index; i++){
@@ -274,12 +281,19 @@ public class NumberFragment extends Fragment {
 	 * @parameter none
 	 * @post returns an int and places it on the UI display
 	 **********************************************************************************/
-	int generateMegaNumber(){
+	public int generateMegaNumber(List<Integer> myMegaList){
 		Random rand = new Random();
 
 		int minNum = 1;
-		int maxNum = 27;
-		return  rand.nextInt( (maxNum - minNum)+1) +minNum;
+		int maxNum = myMegaList.size() - 1;
+		int loopIterator = 50;
+		Integer megNum = 0;
+
+		for ( int i = 0; i < loopIterator; i++){
+			megNum = myMegaList.get(rand.nextInt( (maxNum - minNum)+1) +minNum);
+		}
+
+		return  megNum;
 	}
 
 

@@ -6,11 +6,12 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical"
-	tools:context=".NumberFragment">
+	tools:context=".myFragments.NumberFragment">
 
 	<!-- TODO: Update blank fragment layout -->
 
 	<LinearLayout
+
 		android:id="@+id/numberstext"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -119,12 +120,13 @@
 			android:layout_height="wrap_content"
 			android:layout_marginStart="35dp"
 			android:layout_marginTop="10dp"
-			android:background="@drawable/circlentext"
+			android:background="@drawable/circlentextblue"
 			android:text="00"
 			android:textColor ="@color/White"
 			android:textAlignment="center"
 			android:textSize="30sp" />
 
 	</LinearLayout>
+
 
 </RelativeLayout>

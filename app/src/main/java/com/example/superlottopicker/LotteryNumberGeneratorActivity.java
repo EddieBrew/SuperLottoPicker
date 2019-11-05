@@ -24,10 +24,14 @@ from that pool of number, four(4) lottery ticket quick picts are generated and d
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -74,6 +78,8 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 		lotteryNumberFrame3 = findViewById(R.id.lotteryNumberFrame3);
 		btnGenerateLotteryTickets =  findViewById(R.id.btnGenerateLotteryTickets);
 		editTextMinMax = findViewById(R.id.editTextMinMax);
+		editTextMinMax.setMaxLines(2);
+
 		final String website = "https://www.lotteryusa.com/california/super-lotto-plus/year";
 
 		sendRequestAndPrintResponse();// generates a List of strings that contains the daily lottery numbers
@@ -98,6 +104,9 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 						numberFragment[j].generateLotteryNumbers(lottoNumbers, megaNumbers);
 					}
 
+					if(lottoNumbers.size() > 0 && megaNumbers.size() > 0) {
+						Toast.makeText(LotteryNumberGeneratorActivity.this, "Lottery Numbers10 for Tickets completed", Toast.LENGTH_SHORT).show();
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					Toast.makeText(LotteryNumberGeneratorActivity.this, "TRY AGAIN. ", Toast.LENGTH_LONG).show();
@@ -295,25 +304,27 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 
 		try {
 			String minNMaxValues[] = minMax.split(",");
-			Integer minRange = Integer.parseInt(minNMaxValues[0]);
-			Integer maxRange = Integer.parseInt(minNMaxValues[1]);
+			Integer minRangeForLotto = Integer.parseInt(minNMaxValues[0]);
+			Integer maxRangeForLotto = Integer.parseInt(minNMaxValues[1]);
+			Integer minRangeForMega = Integer.parseInt(minNMaxValues[2]);
+			Integer maxRangeForMega = Integer.parseInt(minNMaxValues[3]);
 			final int TOTAL_NUMBERS = 5;
 			Boolean minNumberRequiredInPool = false;
 
 			switch(number) {
 				case 27:  //selects Mega number.
-					Integer megaMin = 5; // pre-defined min occurrence that the mega number has been drawn
+					//Integer megaMin = 5; // pre-defined min occurrence that the mega number has been drawn
 					final Integer megaMax = 10;//
 					for (int j = 0; j < list.size(); j++) {//pre-defined min occurrence that the mega number has been drawn
 						upDateHashTable(myHashLotteryNumbers, list.get(j).getMegaNumber());
 					}
 					//PrintHashMap(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
 					while (!minNumberRequiredInPool) {
-						printHashMapUsingLoop(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
-						popularLotteryNumbers = getCommonLotteryNumbers(myHashLotteryNumbers, megaMin, megaMax);
+						//printHashMapUsingLoop(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
+						popularLotteryNumbers = getCommonLotteryNumbers(myHashLotteryNumbers, minRangeForMega, maxRangeForMega);
 						if (popularLotteryNumbers.size() < 5) {// Adjusts the min Range if the popularLotteryNumberlist is less than the five numbers
 							//required to make up the five lottery number.
-							megaMin--;
+							minRangeForMega--;
 							minNumberRequiredInPool = false;
 						} else {
 							minNumberRequiredInPool = true;
@@ -328,17 +339,16 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 							upDateHashTable(myHashLotteryNumbers, list.get(j).getLottoNumbers(k));
 						}
 					}
-					printHashMap("LottoNumbers", myHashLotteryNumbers);
-
+					//printHashMapUsingLoop("LottoNumbers", myHashLotteryNumbers);
 					while (!minNumberRequiredInPool) { // Adjusts the min Range if the popularLotteryNumberlist is less than the five numbers
 														//required to make up the five lottery number.
-						printHashMapUsingLoop("HASH LOTTO NUMBERS: :", myHashLotteryNumbers);
-						popularLotteryNumbers = getCommonLotteryNumbers(myHashLotteryNumbers, minRange, maxRange);
-						if (popularLotteryNumbers.size() < 5) {
-							minRange--;
-							if (minRange < 0) {// Adjusts the max Range if the min range is already at 0
-								minRange = 0;
-								maxRange++;
+						//printHashMapUsingLoop("HASH LOTTO NUMBERS: :", myHashLotteryNumbers);
+						popularLotteryNumbers = getCommonLotteryNumbers(myHashLotteryNumbers, minRangeForLotto, maxRangeForLotto);
+						if (popularLotteryNumbers.size() <= 5) {
+							minRangeForLotto--;
+							if (minRangeForLotto < 0) {// Adjusts the max Range if the min range is already at 0
+								minRangeForLotto = 0;
+								maxRangeForLotto++;
 								//Log.i("POPULARLOTTERYNUMBERS = ", String.valueOf(popularLotteryNumbers.size()));
 								minNumberRequiredInPool = false;
 							}
@@ -445,7 +455,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 	private void printHashMapUsingLoop(String title, HashMap<Integer, Integer> map){
 		System.out.println(title + " HASH OUTPUT");
 		for(int i = 1; i < map.size() +1 ; i++){
-			System.out.println("HASHMAP: Key = " + i + ", Value = " + map.get(i).toString());
+			Log.i("HASHMAP:", "Key = " + i + ", Value = " + map.get(i).toString());
 		}
 	}
 

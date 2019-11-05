@@ -14,32 +14,37 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/title_activity_generator"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
 		android:background="@color/Aqua"
 		android:textAlignment="center"
 		android:textSize="30sp"
 		android:textStyle="bold" />
 
+
 	<EditText
 		android:id="@+id/editTextMinMax"
 		android:layout_width="match_parent"
-		android:layout_height="40dp"
-		android:layout_marginStart="10dp"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
 		android:layout_marginTop="10dp"
-		android:layout_marginEnd="10dp"
+		android:layout_marginRight="10dp"
 		android:background="@drawable/border"
-		android:hint="Enter min and max ranges(ex 5,10)"
+		android:hint="@string/minMax"
+		android:isScrollContainer="true"
 		android:paddingStart="10dp"
 		android:paddingTop="5dp"
 		android:paddingEnd="10dp"
 		android:paddingBottom="5dp"
-		android:singleLine="true" />
+		android:textStyle="bold" />
+
 
 	<FrameLayout
 		android:id="@+id/lotteryNumberFrame"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="10dp"
-		android:layout_marginTop="10dp"
+		android:layout_marginTop="5dp"
 		android:layout_marginRight="10dp">
 	</FrameLayout>
 
@@ -48,7 +53,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="10dp"
-		android:layout_marginTop="10dp"
+		android:layout_marginTop="5dp"
 		android:layout_marginRight="10dp">
 	</FrameLayout>
 
@@ -57,7 +62,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="10dp"
-		android:layout_marginTop="10dp"
+		android:layout_marginTop="5dp"
 		android:layout_marginRight="10dp">
 	</FrameLayout>
 
@@ -65,7 +70,7 @@
 		android:id="@+id/lotteryNumberFrame3"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginLeft="10dp"
+		android:layout_marginLeft="5dp"
 		android:layout_marginTop="10dp"
 		android:layout_marginRight="10dp">
 	</FrameLayout>

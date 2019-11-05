@@ -247,7 +247,7 @@ public class NumberFragment extends Fragment {
 
 		numMega.setText(String.valueOf(generateMegaNumber(myMegaList)));
 
-		Toast.makeText(getActivity(), "Lottery Numbers for Tickets completed", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getActivity(), "Lottery Numbers for Tickets completed", Toast.LENGTH_SHORT).show();
 	}
 
 	/*********************************************************************************
@@ -260,7 +260,7 @@ public class NumberFragment extends Fragment {
 	 * @post return true if number exist in the arry, false if the number does not exist in the array
 	 **********************************************************************************/
 	public boolean isDuplicateNum(int newNum, int[]lotteryNumbers, int index){
-
+		Log.i("TESTING", "Entering isDuplicate");
 		boolean duplicate = false;
 		for (int i = 0; i < index; i++){
 
@@ -270,6 +270,7 @@ public class NumberFragment extends Fragment {
 				//return duplicate;
 			}
 		}
+		Log.i("TESTING", "Exiting isDuplicate");
 		return duplicate;
 	}
 

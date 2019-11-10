@@ -80,8 +80,6 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 		editTextMinMax = findViewById(R.id.editTextMinMax);
 		editTextMinMax.setMaxLines(2);
 
-		final String website = "https://www.lotteryusa.com/california/super-lotto-plus/year";
-
 		sendRequestAndPrintResponse();// generates a List of strings that contains the daily lottery numbers
 		btnGenerateLotteryTickets.setOnClickListener(new View.OnClickListener() {
 			@Override

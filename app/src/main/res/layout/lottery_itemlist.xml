@@ -88,19 +88,19 @@
 			android:textAlignment="center"
 			android:textSize="30sp" />
 
-		<TextView
-			android:id="@+id/numMega"
-			android:layout_width="35dp"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/txtViewDate"
-			android:layout_toRightOf="@id/num5"
-			android:layout_marginStart="35dp"
-			android:layout_marginTop="10dp"
-			android:background="@drawable/circlentextblue"
-			android:text="00"
-			android:textColor ="@color/White"
-			android:textAlignment="center"
-			android:textSize="30sp" />
+	<TextView
+		android:id="@+id/numMega"
+		android:layout_width="35dp"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/txtViewDate"
+		android:layout_marginStart="20dp"
+		android:layout_marginTop="10dp"
+		android:layout_toRightOf="@id/num5"
+		android:background="@drawable/circlentextblue"
+		android:text="00"
+		android:textAlignment="center"
+		android:textColor="@color/White"
+		android:textSize="30sp" />
 
 
 

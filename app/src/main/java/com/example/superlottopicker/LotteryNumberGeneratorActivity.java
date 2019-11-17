@@ -316,7 +316,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 					for (int j = 0; j < list.size(); j++) {//pre-defined min occurrence that the mega number has been drawn
 						upDateHashTable(myHashLotteryNumbers, list.get(j).getMegaNumber());
 					}
-					//PrintHashMap(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
+					printHashMap(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
 					while (!minNumberRequiredInPool) {
 						//printHashMapUsingLoop(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
 						popularLotteryNumbers = getCommonLotteryNumbers(myHashLotteryNumbers, minRangeForMega, maxRangeForMega);
@@ -385,7 +385,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 			Integer oldValue = myHashLotteryNumbers.get(key);
 			oldValue++; //increments the hash key values
 
-			myHashLotteryNumbers.replace(key, oldValue);
+			myHashLotteryNumbers.put(key, oldValue);
 		}
 	}
 

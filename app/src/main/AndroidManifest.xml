@@ -13,20 +13,24 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme"
+
 		tools:ignore="GoogleAppIndexingWarning">
 
 		<activity
 			android:name=".LotteryNumberGeneratorActivity"
-			android:label="@string/app_name">
+			android:label="@string/app_name"
+			android:screenOrientation="unspecified">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".LotteryNumberQueryActivity"/>
-		<activity android:name=".CustomMenuActivity" />
-		<activity android:name=".LotteryNumberPastActivity" />
+		<activity android:name=".LotteryNumberQueryActivity"
+			android:screenOrientation="unspecified"/>
+		<activity android:name=".CustomMenuActivity"
+			android:screenOrientation="unspecified"/>
+		<activity android:name=".LotteryNumberPastActivity"
+			android:screenOrientation="unspecified"/>
 
 	</application>
 

@@ -15,6 +15,8 @@ the value is the number of times the number has been drawn.
 The apps allows the user to input the min and max frequency ranges the numbers have been drawn, and
 from that pool of number, four(4) lottery ticket quick picts are generated and displayed on the UI
 
+
+Rev 1.1 4/17/20: Rewrote parseHTMLPage() method to rescprape the lottery webpage for the lottery numbers
  */
 
 
@@ -103,7 +105,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 					}
 
 					if(lottoNumbers.size() > 0 && megaNumbers.size() > 0) {
-						Toast.makeText(LotteryNumberGeneratorActivity.this, "Lottery Numbers10 for Tickets completed", Toast.LENGTH_SHORT).show();
+						Toast.makeText(LotteryNumberGeneratorActivity.this, "Lottery Numbers for Tickets completed", Toast.LENGTH_SHORT).show();
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -223,51 +225,50 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 	 *                                  lottoe numbers for the last 52 weeks
 	 **********************************************************************************/
 	@Contract("null -> null")
-	private void parseHTMLPage(final String response){
+	private void parseHTMLPage(final String response) {
 
-		if( response == "")return;
+		if (response == "") return;
+		Document doc = parse(response);;
 
 		List<LotteryNumbersHolder> myDailyLotto = new ArrayList<>();
-		StringBuilder myLottoInfo =  new StringBuilder();
-		StringBuilder myDate = new StringBuilder();
-		Document doc ;
-
-		doc = parse(response);
-
-
 		try {
-			Elements table = doc.getElementsByTag("tbody"); //get the body of the table
-			Elements rows = table.select("tr");//get the row tatag for the table
-
+			List<String> lottoDrawingDates = new ArrayList<>(); //holds the lotto drawing dates
+			Elements lotteryDatesInfo = doc.select("time");
+			for (Element lottoDates : lotteryDatesInfo) {
+				Elements date = lottoDates.getElementsByAttribute("datetime");
+				lottoDrawingDates.add(date.text());
+			}
+			List<String> weeklyLottoNumbers = new ArrayList<>(); //holds the lotto numbers
+			Elements rows = doc.select("tr.c-game-table__item");
 			for (Element row : rows) {
 				Elements cells = row.children();//get all elements in the result cell
-				//Log.i("NUMLIST", cells.text());
-				for(Element cell: cells) {
-					Elements date = cell.getElementsByAttributeValue("class", "date");
-					myDate.append(date.text());
-
-					Elements numListings = cell.getElementsByAttributeValue("class", "draw-result list-unstyled list-inline" );
-					//Log.i("XXXXX", numListings.text());
-					for(Element numListing : numListings ){
-						Elements numbers = numListing.getElementsByTag("li");
-
-						for(Element number : numbers ){
+				for (Element cell : cells) {
+					Elements numListings = cell.getElementsByAttributeValue("class", "c-result c-result--in-card c-result--has-extra");
+					for (Element numListing : numListings) {
+						Elements numbers = numListing.getElementsByTag("li ");
+						String lottoNumbers = "";
+						for (Element number : numbers) {
 							String lotteryNumber = number.text();
-							myLottoInfo.append(lotteryNumber + " ") ;
+							lottoNumbers += lotteryNumber + ", ";
 						}
 
-						myDailyLotto.add(new LotteryNumbersHolder(myDate.toString(), myLottoInfo.toString()));
-						myDate.setLength(0); //empties memory that holds the date
-						myLottoInfo.setLength(0);
+						//Number format when scraped from website--: 5, 10, 6, 8, 34, MN: 33,
+						String updatedLottoNumbers = lottoNumbers.replace("MN: ", "");////removes mega Number designator (MN: ) from lotto number string
+						String updatedLottoNumbers1 = updatedLottoNumbers.replace (",", ""); //removes the comma separator from the numbers string
+						weeklyLottoNumbers.add(updatedLottoNumbers1);
 					}
 				}
-
 			}
-		}catch(Exception e){
+			for (int i = 0; i < weeklyLottoNumbers.size(); i++) {
+				myDailyLotto.add(new LotteryNumbersHolder(lottoDrawingDates.get(i + 1), weeklyLottoNumbers.get(i)));
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
 
-            lottoNumberList = myDailyLotto;
+		lottoNumberList = myDailyLotto;
+
 
 	}
 

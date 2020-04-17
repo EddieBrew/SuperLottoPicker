@@ -10,11 +10,11 @@
 
 		<TextView
 			android:id="@+id/txtViewDate"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="100dp"
-			android:text="Draw Date"
-			android:textSize="25sp"
+			android:gravity="center"
+			android:text=""
+			android:textSize="20sp"
 			android:textStyle="bold" />
 
 		<TextView

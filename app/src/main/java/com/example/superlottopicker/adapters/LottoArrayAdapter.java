@@ -2,8 +2,7 @@ package com.example.superlottopicker.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public class LottoArrayAdapter extends ArrayAdapter<LotteryNumbersHolder> {
 	}
 
    //place the name of the custom listview layout (lottery_itemlist) in the super
-	public LottoArrayAdapter(@NonNull Activity context, List<LotteryNumbersHolder> objects) {
+	public LottoArrayAdapter( Activity context, List<LotteryNumbersHolder> objects) {
 		super(context, R.layout.lottery_itemlist, objects);
 
 		this.context = context;

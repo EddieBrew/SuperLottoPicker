@@ -68,8 +68,6 @@ public class LotteryNumbersHolder implements Parcelable {
 			switch(i){
 				case 5: this.megaNumber = Integer.parseInt(lNumberInput[i]);
 				break;
-				case 6:
-				break;
 				default: this.num[i]= Integer.parseInt(lNumberInput[i]);
 			}
 		}

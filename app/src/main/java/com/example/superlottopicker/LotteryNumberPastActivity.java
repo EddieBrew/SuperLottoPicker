@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.superlottopicker.adapters.LottoArrayAdapter;
 import com.example.superlottopicker.myCustomClasses.LotteryNumbersHolder;
-import com.example.superlottopicker.myFragments.ListViewFragment;
+import com.example.superlottopicker.myFragments.PastFragment;
 
 import java.util.List;
 
@@ -20,11 +20,10 @@ public class LotteryNumberPastActivity extends CustomMenuActivity {
 
 
 	private Button btnPastNumbers;
-	Bundle bundle;
 	Intent intent;
 	LottoArrayAdapter lottoArrayAdapter;
 	ListView lotteryListView;
-	private ListViewFragment listViewFragment;
+	private PastFragment pastFragment;
 	private FragmentTransaction fragmentTransaction;;
 
 
@@ -36,14 +35,16 @@ public class LotteryNumberPastActivity extends CustomMenuActivity {
 		intent  = getIntent();
 
 		btnPastNumbers = findViewById(R.id.btnPastNumbers);
-		listViewFragment = new ListViewFragment();
-		lotteryListView = this.findViewById(R.id.listview_lottoNumbers);
+		pastFragment = new PastFragment();
+		lotteryListView = this.findViewById(R.id.past_listview_fragment);
 //
 
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.replace(R.id.myDisplayFrame, listViewFragment);
+		fragmentTransaction.replace(R.id.myDisplayFrame, pastFragment);
 		fragmentTransaction.commit();
+
+
 
 		btnPastNumbers.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -73,14 +74,14 @@ public class LotteryNumberPastActivity extends CustomMenuActivity {
 		try {
 
 			lottoArrayAdapter = new LottoArrayAdapter(LotteryNumberPastActivity.this, lottoNumbers);
-			lotteryListView = LotteryNumberPastActivity.this.findViewById(R.id.listview_lottoNumbers);
+			lotteryListView = LotteryNumberPastActivity.this.findViewById(R.id.past_listview_fragment);
 			lotteryListView.setAdapter(lottoArrayAdapter);
 
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			Toast.makeText(this, e.toString(),Toast.LENGTH_LONG).show();
-			Log.i("MYERROR", e.toString());
+			//Log.i("MYERROR", e.toString());
 		}
 	}
 

@@ -1,9 +1,7 @@
 package com.example.superlottopicker.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import com.example.superlottopicker.R;
 import com.example.superlottopicker.myCustomClasses.LotteryNumbersHolder;
 
 import java.util.List;
-import java.util.Locale;
 
 public class LottoArrayAdapter extends ArrayAdapter<LotteryNumbersHolder> {
 
@@ -34,9 +31,9 @@ public class LottoArrayAdapter extends ArrayAdapter<LotteryNumbersHolder> {
 		TextView textViewNumMegaH;
 	}
 
-   //place the name of the custom listview layout (lottery_itemlist) in the super
-	public LottoArrayAdapter(@NonNull Activity context, List<LotteryNumbersHolder> objects) {
-		super(context, R.layout.lottery_itemlist, objects);
+   //place the name of the custom listview layout (fragment_past_itemlist) in the super
+	public LottoArrayAdapter( Activity context, List<LotteryNumbersHolder> objects) {
+		super(context, R.layout.fragment_past_itemlist, objects);
 
 		this.context = context;
 		this.objects = objects;
@@ -62,7 +59,7 @@ public class LottoArrayAdapter extends ArrayAdapter<LotteryNumbersHolder> {
 
 			LayoutInflater inflater = LayoutInflater.from(getContext());
 
-			convertView = inflater.inflate(R.layout.lottery_itemlist, parent, false);
+			convertView = inflater.inflate(R.layout.fragment_past_itemlist, parent, false);
 			holder.textViewDateH = convertView.findViewById(R.id.txtViewDate);
 			holder.textViewNum1H = convertView.findViewById(R.id.num1);
 			holder.textViewNum2H = convertView.findViewById(R.id.num2);

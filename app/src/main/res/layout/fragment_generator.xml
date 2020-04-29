@@ -6,7 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical"
-	tools:context=".myFragments.NumberFragment">
+	tools:context=".myFragments.GeneratorFragment">
 
 	<!-- TODO: Update blank fragment layout -->
 

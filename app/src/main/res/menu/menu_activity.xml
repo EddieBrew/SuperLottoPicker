@@ -18,10 +18,10 @@
 		android:orderInCategory="102"
 		android:visible="true"/>
 
-	<item
+e	<item
 		android:id="@+id/menu_numberQuery"
 		android:orderInCategory="104"
-		android:title="@string/query_number"
+		android:title="@string/frequency_numbers"
 		android:visible="true" />
 
 

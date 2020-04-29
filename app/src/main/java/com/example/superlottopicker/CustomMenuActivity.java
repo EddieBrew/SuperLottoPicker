@@ -41,7 +41,7 @@ public class CustomMenuActivity extends AppCompatActivity {
 				return true;
 
 			case (R.id.menu_numberQuery)://
-				mIntent = new Intent(getApplicationContext(), LotteryNumberQueryActivity.class);
+				mIntent = new Intent(getApplicationContext(), LotteryNumberFrequencyActivity.class);
 				mIntent.putParcelableArrayListExtra("myLottoList", (ArrayList<? extends Parcelable>) LotteryNumberGeneratorActivity.lottoNumberList);
 				startActivity(mIntent);
 

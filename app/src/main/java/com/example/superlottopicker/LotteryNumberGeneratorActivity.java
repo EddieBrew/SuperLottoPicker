@@ -24,14 +24,11 @@ from that pool of number, four(4) lottery ticket quick picts are generated and d
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,8 +37,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.superlottopicker.myCustomClasses.LotteryNumberFrequency;
 import com.example.superlottopicker.myCustomClasses.LotteryNumbersHolder;
-import com.example.superlottopicker.myFragments.NumberFragment;
+import com.example.superlottopicker.myFragments.GeneratorFragment;
 
 import org.jetbrains.annotations.Contract;
 import org.jsoup.nodes.Document;
@@ -55,9 +53,9 @@ import java.util.List;
 
 import static org.jsoup.Jsoup.parse;
 
-public class LotteryNumberGeneratorActivity extends CustomMenuActivity implements NumberFragment.OnFragmentInteractionListener {
+public class LotteryNumberGeneratorActivity extends CustomMenuActivity implements GeneratorFragment.OnFragmentInteractionListener {
 	public static android.support.v4.app.FragmentManager fragmentManager;
-	private NumberFragment[] numberFragment; //UI component that displays each lottery ticket number
+	private GeneratorFragment[] numberFragment; //UI component that displays each lottery ticket number
 	FrameLayout lotteryNumberFrame, lotteryNumberFrame1, lotteryNumberFrame2, lotteryNumberFrame3;
 	Button btnGenerateLotteryTickets; //pressed to generate lottery tickets
 	EditText editTextMinMax;
@@ -103,7 +101,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 					}
 
 					if(lottoNumbers.size() > 0 && megaNumbers.size() > 0) {
-						Toast.makeText(LotteryNumberGeneratorActivity.this, "Lottery Numbers10 for Tickets completed", Toast.LENGTH_SHORT).show();
+						Toast.makeText(LotteryNumberGeneratorActivity.this, "Lottery Numbers Generated for Tickets Completed", Toast.LENGTH_LONG).show();
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -113,10 +111,10 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 		});
 
 
-		numberFragment = new NumberFragment[LOTNUMBER];
+		numberFragment = new GeneratorFragment[LOTNUMBER];
 
 		for(int i =0; i < LOTNUMBER; i++) {
-			numberFragment[i] = new NumberFragment();
+			numberFragment[i] = new GeneratorFragment();
 			setDefaultFragment(numberFragment[i], i);
 		}
 	}
@@ -223,51 +221,69 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 	 *                                  lottoe numbers for the last 52 weeks
 	 **********************************************************************************/
 	@Contract("null -> null")
-	private void parseHTMLPage(final String response){
+	private void parseHTMLPage(final String response) {
 
-		if( response == "")return;
+		if (response == "") return;
 
-		List<LotteryNumbersHolder> myDailyLotto = new ArrayList<>();
-		StringBuilder myLottoInfo =  new StringBuilder();
-		StringBuilder myDate = new StringBuilder();
-		Document doc ;
+
+		//StringBuilder myLottoInfo =  new StringBuilder();
+		//StringBuilder myDate = new StringBuilder();
+		Document doc;
 
 		doc = parse(response);
 
 
+		List<LotteryNumbersHolder> myDailyLotto = new ArrayList<>();
 		try {
-			Elements table = doc.getElementsByTag("tbody"); //get the body of the table
-			Elements rows = table.select("tr");//get the row tatag for the table
+			List<String> lottoDrawingDates = new ArrayList<>(); //holds the lotto drawing dates
+			Elements lotteryDatesInfo = doc.select("time");
 
+			for (Element lottoDates : lotteryDatesInfo) {
+				Elements date = lottoDates.getElementsByAttribute("datetime");
+				lottoDrawingDates.add(date.text());
+			}
+
+
+			List<String> weeklyLottoNumbers = new ArrayList<>(); //holds the lotto numbers
+			Elements rows = doc.select("tr.c-game-table__item");
 			for (Element row : rows) {
 				Elements cells = row.children();//get all elements in the result cell
-				//Log.i("NUMLIST", cells.text());
-				for(Element cell: cells) {
-					Elements date = cell.getElementsByAttributeValue("class", "date");
-					myDate.append(date.text());
-
-					Elements numListings = cell.getElementsByAttributeValue("class", "draw-result list-unstyled list-inline" );
-					//Log.i("XXXXX", numListings.text());
-					for(Element numListing : numListings ){
-						Elements numbers = numListing.getElementsByTag("li");
-
-						for(Element number : numbers ){
+				for (Element cell : cells) {
+					Elements numListings = cell.getElementsByAttributeValue("class", "c-result c-result--in-card c-result--has-extra");
+					for (Element numListing : numListings) {
+						Elements numbers = numListing.getElementsByTag("li ");
+						String lottoNumbers = "";
+						for (Element number : numbers) {
 							String lotteryNumber = number.text();
-							myLottoInfo.append(lotteryNumber + " ") ;
+							lottoNumbers += lotteryNumber + ", ";
 						}
-
-						myDailyLotto.add(new LotteryNumbersHolder(myDate.toString(), myLottoInfo.toString()));
-						myDate.setLength(0); //empties memory that holds the date
-						myLottoInfo.setLength(0);
+						String updatedLottoNumbers = lottoNumbers.replace("MN: ", "");////removes mega Number designator from lotto number string
+						String updatedLottoNumbers1 = updatedLottoNumbers.replace (",", "");
+						//Log.i("ERROR1", updatedLottoNumbers1 );
+						weeklyLottoNumbers.add(updatedLottoNumbers1);
 					}
 				}
 
 			}
-		}catch(Exception e){
+
+
+
+
+
+			//List<String> dailyLottoNumbersString = new ArrayList<>();//fill
+			for (int i = 0; i < weeklyLottoNumbers.size(); i++) {
+				//Log.i("ERROR1", lottoDrawingDates.get(i + 1) + "    " + weeklyLottoNumbers.get(i) );
+				myDailyLotto.add(new LotteryNumbersHolder(lottoDrawingDates.get(i + 1), weeklyLottoNumbers.get(i)));
+			}
+			//Log.i("Size2 = ", String.valueOf(myDailyLotto.size()));
+
+		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
 
-            lottoNumberList = myDailyLotto;
+		lottoNumberList = myDailyLotto;
+
 
 	}
 
@@ -286,7 +302,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 	 * @post List<Integer> a list containing the the past lottery numbers occurances during the past
 	 *                     52 weeks
 	 * **********************************************************************************/
-	public List<Integer> getListForNumbers(List<LotteryNumbersHolder> list, Integer number,  String minMax) {
+	public List<Integer> getListForNumbers(List<LotteryNumbersHolder> list, Integer number, String minMax) {
 
 		//creates a HashMap where the keys are numbers between the lotto (1-47) and mega number(1-27) ranges. The values are initialized to
 		// zero and will be incremented to reflect the number of times the key number have been
@@ -316,7 +332,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 					for (int j = 0; j < list.size(); j++) {//pre-defined min occurrence that the mega number has been drawn
 						upDateHashTable(myHashLotteryNumbers, list.get(j).getMegaNumber());
 					}
-					printHashMap(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
+					//printHashMap(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
 					while (!minNumberRequiredInPool) {
 						//printHashMapUsingLoop(" HASH MEGA NUMBERS: :", myHashLotteryNumbers);
 						popularLotteryNumbers = getCommonLotteryNumbers(myHashLotteryNumbers, minRangeForMega, maxRangeForMega);
@@ -361,7 +377,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			Toast.makeText(this, "Min,Max INPUT ERROR: Verify min,max input( for ex. 5,10)", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Min,Max INPUT ERROR: Verify min,max input( for ex. 5,10,3,8)", Toast.LENGTH_LONG).show();
 		}
 		//Log.i("POPULARLOTTERYNUMBERS = ", String.valueOf(popularLotteryNumbers.size()));
 		return popularLotteryNumbers;
@@ -431,7 +447,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 	 * @post none
 	 **********************************************************************************/
 	static void printHashMap(String title,	HashMap<Integer, Integer> map){
-		System.out.println(title + " HASH OUTPUT");
+		//System.out.println(title + " HASH OUTPUT");
 		Iterator<Integer> itr = map.keySet().iterator();
 		while(itr.hasNext())
 		{

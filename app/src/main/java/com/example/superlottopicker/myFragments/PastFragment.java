@@ -13,10 +13,10 @@ import com.example.superlottopicker.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListViewFragment extends Fragment {
+public class PastFragment extends Fragment {
 
 	public ListView listView;
-	public ListViewFragment() {
+	public PastFragment() {
 		// Required empty public constructor
 	}
 
@@ -27,11 +27,11 @@ public class ListViewFragment extends Fragment {
 		// Inflate the layout for this fragment
 
 
-		//name of the of the layout-->fragment_list_view
-		View view = inflater.inflate(R.layout.fragment_list_view, container, false);
+		//name of the of the layout-->fragment_past
+		View view = inflater.inflate(R.layout.fragment_past, container, false);
 
-		//name of the listView(listview_lottoNumbers) inside the fragment_list_view layout
-		listView = view.findViewById(R.id.listview_lottoNumbers);
+		//name of the listView(listview_lottoNumbers) inside the fragment_past layout
+		listView = view.findViewById(R.id.past_listview_fragment);
 
 		return view;
 

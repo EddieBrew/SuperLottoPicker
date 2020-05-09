@@ -63,7 +63,6 @@ public class LotteryNumberFrequencyActivity extends CustomMenuActivity {
 		if(chbxTypeOfNumbers.isChecked()){
 			numSelector[0] = megaNumberTotal;
 		} else {
-
 			numSelector[0] = superLottoTotal;
 		}
 
@@ -223,7 +222,7 @@ public class LotteryNumberFrequencyActivity extends CustomMenuActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		//lottoFrequencyArrayAdapter.notifyDataSetChanged();
 	}
 
 

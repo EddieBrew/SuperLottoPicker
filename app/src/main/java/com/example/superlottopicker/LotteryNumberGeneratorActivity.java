@@ -15,6 +15,21 @@ the value is the number of times the number has been drawn.
 The apps allows the user to input the min and max frequency ranges the numbers have been drawn, and
 from that pool of number, four(4) lottery ticket quick picts are generated and displayed on the UI
 
+The apps consists of three(3) activities  that assists the user in generating
+quickpick lottery numbers:
+
+	    GeneratorFragment: Allows the user to input the min and max frequency ranges the lotto
+                           and mega  numbers have been drawn, and from that pool of number, ten(10)
+                           lottery ticket quick picts are generated and displayed on the UI
+
+	    PastLottoNumbersFragment: Display the past 52 week drawn lottery numbers
+
+	    FrequencyFragment: Display the number of time each SuperLotto and Mega numbers have been
+	                       drawn the past 52 weeks.
+
+
+
+
  */
 
 
@@ -466,7 +481,7 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 	 *            HashMap<Integer, Integer> myHashLotteryNumbers
 	 * @post none
 	 **********************************************************************************/
-	private void printHashMapUsingLoop(String title, HashMap<Integer, Integer> map){
+	private void printHashMapUsiCustngLoop(String title, HashMap<Integer, Integer> map){
 		System.out.println(title + " HASH OUTPUT");
 		for(int i = 1; i < map.size() +1 ; i++){
 			Log.i("HASHMAP:", "Key = " + i + ", Value = " + map.get(i).toString());

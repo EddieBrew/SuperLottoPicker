@@ -91,7 +91,6 @@ public class LotteryNumberGeneratorActivity extends CustomMenuActivity implement
 		lotteryNumberFrame3 = findViewById(R.id.lotteryNumberFrame3);
 		btnGenerateLotteryTickets =  findViewById(R.id.btnGenerateLotteryTickets);
 		editTextMinMax = findViewById(R.id.editTextMinMax);
-		editTextMinMax.setMaxLines(2);
 
 		sendRequestAndPrintResponse();// generates a List of strings that contains the daily lottery numbers
 		btnGenerateLotteryTickets.setOnClickListener(new View.OnClickListener() {
